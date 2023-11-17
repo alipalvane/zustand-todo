@@ -13,16 +13,19 @@ export type Task = {
 
 export type State = {
   tasks: Task[];
+  draggedTask: string | null;
 };
 
 export type Actions = {
   addTask: (title: string, description?: string) => void;
   removeTask: (id: string) => void;
   updateTask: (id: string, status: Status) => void;
+  dragTask: (id: string | null) => void;
 };
 
 export const useTaskStore = create<State & Actions>((set) => ({
   tasks: [],
+  draggedTask: null,
   addTask: (title: string, description?: string) =>
     set((state) => ({
       tasks: [
@@ -40,8 +43,11 @@ export const useTaskStore = create<State & Actions>((set) => ({
         task.id === id ? { ...task, status } : task
       ),
     })),
+  dragTask: (id:string | null) => set({draggedTask:id}),
 }));
 
+
+// declear Types of State and Actions together in one interface and pass to create method
 interface ModalStore {
   isOpen: boolean;
   openModal: () => void;
