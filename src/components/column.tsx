@@ -1,7 +1,7 @@
 "use client";
 import { Status, useTaskStore } from "@/lib/store";
 import Task from "./task";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 
 export default function Column({
   title,
@@ -26,6 +26,10 @@ export default function Column({
     updateTask(draggedTask,status)
     dragTask(null)
   };
+
+  useEffect(()=>{
+    useTaskStore.persist.rehydrate()
+  },[])
 
   return (
     <section className="h-[600px] flex-1">
